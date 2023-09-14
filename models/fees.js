@@ -7,4 +7,7 @@ const feeSchema = mongoose.Schema({
     amount: { type: Number},
     dueDate: {type: String}
 });
-module.exports = mongoose.model('fees', feeSchema);
+
+
+const Fees = mongoose.model('fees', feeSchema);
+module.exports = Fees;

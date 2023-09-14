@@ -16,4 +16,6 @@ const studentSchema = mongoose.Schema(
         }
     }
 );
-module.exports = mongoose.model('students', studentSchema);
+
+const Student = mongoose.model('students', studentSchema);
+module.exports = Student;

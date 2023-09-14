@@ -10,4 +10,5 @@ const courseUnitsSchema = mongoose.Schema({
     courseId: [ { type: mongoose.Schema.Types.ObjectId, ref: 'courses'}]
 });
 
-module.exports = mongoose.model('courseUnits', courseUnitsSchema);
+const CourseUnits = mongoose.model('courseUnits', courseUnitsSchema);
+module.exports = CourseUnits;

@@ -10,4 +10,5 @@ const bookSchema = mongoose.Schema({
     categoryId: {type: mongoose.Schema.Types.ObjectId, ref: 'bookCategory'}
 });
 
-module.exports = mongoose.model('book', bookSchema);
+const Book = mongoose.model('book', bookSchema);
+module.exports = Book;

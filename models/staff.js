@@ -28,3 +28,6 @@ const StaffSchema = new mongoose.Schema(
     },
     {timestamps: true}
 );
+
+const Staff = mongoose.model('staff', StaffSchema);
+module.exports = Staff;

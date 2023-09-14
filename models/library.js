@@ -7,4 +7,7 @@ const liTtransactionSchema = new Schema({
     checkOutDate: {type: String},
     returnDate:  { type: String}
 });
-module.exports = mongoose.model('lib', liTtransactionSchema)
+
+
+const LibraryTransaction = mongoose.model('lib', liTtransactionSchema);
+module.exports = LibraryTransaction;

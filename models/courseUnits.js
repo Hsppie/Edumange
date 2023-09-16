@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 /// course units
 
-const courseUnitsSchema = mongoose.Schema({
+const courseUnitsSchema = new mongoose.Schema({
     _id: { type: String, unique: true },
     unitname: {type: String},
     academicYear: {type: String},

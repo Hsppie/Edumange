@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 /// fees Schema
 
 
-const feeSchema = mongoose.Schema({
+const feeSchema = new mongoose.Schema({
     amount: { type: Number},
     dueDate: {type: String}
 });

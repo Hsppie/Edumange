@@ -3,7 +3,7 @@ const { Schema, Model, default: mongoose } = require("mongoose");
 
 // courses
 
-const courseSchema = new Schema({
+const courseSchema = new mongoose.Schema({
     _id: {type: String, unique: true},
     name: {type: String},
     description: { type: String},

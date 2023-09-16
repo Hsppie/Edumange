@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const studentSchema = mongoose.Schema(
+const studentSchema = new mongoose.Schema(
     {
         firstname:{type: String, required: true},
         lastname: {type: String, required: true},
@@ -8,6 +8,7 @@ const studentSchema = mongoose.Schema(
         gender:{ type: String },
         admision: { type: String },
         semester: { type: String},
+        image: { type: String, required: true},
         course: {type: Schema.Types.ObjectId, ref: 'courses'},
         fees: {type: Schema.Types.ObjectId, ref: 'fees'},
         address:{

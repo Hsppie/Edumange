@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 /// books schema
 
-const bookCategorySchema = mongoose.Schema({
+const bookCategorySchema = new mongoose.Schema({
     _id: {type: String, unique: true},
     catName :{ type:String }
 });

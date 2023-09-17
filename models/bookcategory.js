@@ -7,5 +7,4 @@ const bookCategorySchema = new mongoose.Schema({
     catName :{ type:String }
 });
 
-const BookCategory =  mongoose.model('bookCategory', bookCategorySchema);
-module.exports = BookCategory;
+module.exports =  mongoose.model('bookCategory', bookCategorySchema);

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/public/css/main.css" />
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/public/css/font_awesome_all.min.css" />
+    <title>EduManage | <%= title %></title>
+  </head>
+  <body>
+    <div class="d-flex" id="wrapper">
+      <!----sidebar start here-->
+      <%- include('./navbar') %>
+      <!----sidebar ends here-->
+      <div id="page-content-wrapper">
+        <!----navbar start here-->
+        <%- include('./siderbar') %>
+        <!----navbar ends here-->
+        <div class="container-fluid"><%- body %>></div>
+      </div>
+    </div>
+
+    <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <script src="/public/js/main.js"></script>
+  </body>
+</html>

@@ -19,24 +19,17 @@ const app = express();
 
 // Setting db connection
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
-const db=mongoose.connection;
-db.on('error', (error)=>{
+const db = mongoose.connection;
+db.on('error', (error) => {
     console.log(error)
 });
-db.once('open', ()=>{
+db.once('open', () => {
     console.log('Database connected successfully')
 });
 
 
-/* 
-//
-//
-*/
-
-
-
 // middleware
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(expressLayout);
 app.use(express.json());
 app.use(session({
@@ -46,7 +39,7 @@ app.use(session({
 }));
 
 
-app.use((req, res, next)=>{
+app.use((req, res, next) => {
     res.locals.message = req.session.message;
     delete req.session.message;
     next();
@@ -54,9 +47,15 @@ app.use((req, res, next)=>{
 
 // setting templating engin
 app.set('view engine', 'ejs');
-app.set('layout', 'layouts/layout');
 app.set('views', path.join(__dirname, '/views'));
+app.set('layout', 'layouts/layout');
+app.set('layout', path.join(__dirname, '/views/layout'));
+app.set('partials', path.join(__dirname, '/views/partials'));
 app.use(express.static('public'));
+app.use('/images', express.static(__dirname + 'public/images'));
+app.use('/css', express.static(__dirname + 'public/css'));
+app.use('/js', express.static(__dirname + 'public/js'));
+app.use('/uploads', express.static(__dirname + 'public/uploads'));
 /*
 app.use(StudentRoutes);
 app.use(CourseRoutes);
@@ -65,10 +64,10 @@ app.use(staffRoutes);
 
 ///Routes
 
-app.use(require('./routes/student/student'))
+app.use(require('./routes/student'))
 
 
-app.listen(process.env.PORT || 3000, ()=>{
+app.listen(process.env.PORT || 3000, () => {
     try {
         console.log(`listening on http://localhost:${process.env.PORT}`)
     } catch (error) {

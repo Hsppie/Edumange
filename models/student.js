@@ -2,15 +2,16 @@ const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema(
     {
+        _id: { type: String },
         firstname:{type: String, required: true},
         lastname: {type: String, required: true},
         birthDate:{type: String, required: true},
         gender:{ type: String },
         admision: { type: String },
         semester: { type: String},
-        image: { type: String, required: true},
-        course: {type: Schema.Types.ObjectId, ref: 'courses'},
-        fees: {type: Schema.Types.ObjectId, ref: 'fees'},
+        photo: { type: String, required: true},
+        course: {type: mongoose.Schema.Types.ObjectId, ref: 'courses'},
+        fees: {type: mongoose.Schema.Types.ObjectId, ref: 'fees'},
         address:{
             contact:{type:String, required: true},
             email:{type: String, unique:true, required: true},

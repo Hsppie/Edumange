@@ -2,28 +2,39 @@
 
 const express = require('express');
 const router = express.Router()
+const courseModel = require('../models/course');
 
-
-router.get('/course', (req, res) => {
+router.post('/Createcourse', (req, res) => {
     //create New course function
-    res.status(200).send(" Create New course")});
+    const newCourse = new courseModel({
+        name: req.body.name,
 
-router.get('/allCourse',(req, res) => {
-    //get all Courses function
+    })
+
+
+    res.status(200).send(" Create New course")
+});
+
+router.get('/allCourse', (req, res) => {
+    /* 
+    fetch data from the database
+    */
     res.status(200).send(" Dispalys all Course");
 });
 
-router.get('/singleCourse',(req, res)=> {
-    //get Course's details function
+router.get('/singleCourse', (req, res) => {
+    /*
+    fetch databy  ID from the database
+    */
     res.status(200).send(" Dispalys a single Course");
 });
 
-router.get('/updateCourse',(req, res)=> {
+router.put('/updateCourse', (req, res) => {
     //update Course's details function
     res.status(200).send(" update a Course");
 });
 
-router.get('/deletecourse',(req, res)=> {
+router.delete('/deletecourse', (req, res) => {
     //delete a Course's function
     res.status(200).send(" Deletes a Single Course");
 });

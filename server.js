@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require('path');
 require('dotenv').config();
+const methodOverride = require('method-override');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const bodyparser = require('body-parser');
@@ -38,6 +39,8 @@ app.use(session({
     resave: false
 }));
 
+app.use(methodOverride('_method'))
+
 
 app.use((req, res, next) => {
     res.locals.message = req.session.message;
@@ -64,7 +67,7 @@ app.use(staffRoutes);
 
 ///Routes
 
-app.use(require('./routes/student'))
+app.use('/student', require('./routes/student'))
 
 
 app.listen(process.env.PORT || 3000, () => {

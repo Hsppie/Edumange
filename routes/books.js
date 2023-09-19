@@ -8,13 +8,16 @@ const upload = require('../utility/utility');
 
 //const categoryModel = require('../models/bookcategory')
 
+router.get('/addbook', (req, res) =>{})
+
+
 /* Registration new books*/
-router.post('/addbook', upload, async (req, res) => {
-    //create New sudent function
+router.post('/newbook', upload, async (req, res) => {
+    //create New book function
     const newbook = new booksModel({
         _id: require.body.id,
         title : require.body.title,
-        author: require.body.author
+        author: require.body.author,
         isbn: require.body.isbn,
     
     });
@@ -40,7 +43,7 @@ router.get('/allbooks', (req, res) => {
     const allbooks = booksModel.find({});
 
     //res.status(200).send(" Dispalys all books");
-    res.render('text', { title: 'all books page' });
+    res.send('text', { title: 'all books page' });
 });
 
 router.get('/singlebook', (req, res) => {
@@ -53,13 +56,10 @@ router.get('/updatebooks', (req, res) => {
     res.status(200).send(" update books");
 });
 
-router.get('/deletebook', (req, res) => {
+router.delete('/deletebook', (req, res) => {
     //delete a book function
     res.status(200).send(" Deletes a Single book");
 });
 
-
-
-/* Book category */
 
 module.exports = router;

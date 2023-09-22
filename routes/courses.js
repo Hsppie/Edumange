@@ -3,41 +3,81 @@
 const express = require('express');
 const router = express.Router()
 const courseModel = require('../models/course');
+const courseunit = require('../models/courseUnits')
 
-router.post('/Createcourse', (req, res) => {
-    //create New course function
+/*this routes renders course creation form view */
+router.get('/addCourse', async (req, res) => {
+
+    const courseUnits = await courseunit.findOne({ unitname: req.body.units });
+    res.status(200).send(courseUnits)
+});
+
+/*this route is for creating a new course in database */
+
+router.post('/createCourse', async (req, res) => {
+    const courseUnits = await courseunit.findOne({ unitname: req.body.units });
+
     const newCourse = new courseModel({
-        name: req.body.name,
+        courseName: req.body.courseName,
+        description: req.body.description,
+        creditHours: req.body.creditHours,
+        courseUnits_id: courseUnits._id
+    });
 
-    })
-
-
-    res.status(200).send(" Create New course")
+    try {
+        const course = await newCourse.save()
+        res.status(200).send(course)
+    } catch (error) {
+        console.log(error.message)
+    }
 });
 
-router.get('/allCourse', (req, res) => {
-    /* 
-    fetch data from the database
-    */
-    res.status(200).send(" Dispalys all Course");
-});
+/* this route is for retrieving all courses */
+router.get('/allCourse', async (req, res) => {
 
-router.get('/singleCourse', (req, res) => {
+    const allCourse = await courseModel.find({});
+    res.status(200).send(allCourse);
+})
+
+/* this route is for retrieving and viewing a single course */
+router.get('/:course_id/view', async (req, res) => {
     /*
-    fetch databy  ID from the database
+    fetch course by  ID from the database
     */
-    res.status(200).send(" Dispalys a single Course");
+    const viewCourse = await courseModel.findById({ _id: req.params.course_id }).populate({ path: 'courseUnits_id', select: [ 'unitname' ] });
+    res.status(200).send(viewCourse);
+});
+/* this route is for rendering the edit view template */
+router.get('/:course_id/editCourse', async (req, res) => {
+    const editCourse = await courseModel.findById({ _id: req.params.course_id }).populate({ path: 'courseUnits_id', select: [ 'unitname' ] });
+    res.status(200).send(editCourse);
 });
 
-router.put('/updateCourse', (req, res) => {
-    //update Course's details function
-    res.status(200).send(" update a Course");
+/* this route is for update course specfics */
+router.put('/:course_id/updateCourse', async (req, res) => {
+    try {
+        const courseUnit = await courseunit.findOne({ unitname: req.body.units });
+        const updateCourse = await courseModel.findByIdAndUpdate(
+            { _id: req.params.course_id },
+            {
+                $set: {
+                    name: req.body.name,
+                    description: req.body.description,
+                    creditHours: req.body.creditHours,
+                    courseUnits_id: courseUnit._id
+                }
+            },
+            { new: true }
+        );
+        res.status(200).send(updateCourse);
+    } catch (error) {
+        console.log(error.message)
+    }
 });
-
-router.delete('/deletecourse', (req, res) => {
-    //delete a Course's function
-    res.status(200).send(" Deletes a Single Course");
+/* this route is for deleting a specfic course */
+router.delete('/:course_id/deletecourse', async (req, res) => {
+    const todelete = await courseModel.deleteOne({ _id: req.params.course_id })
+    res.status(200).send("Course deleted");
 });
-
 
 module.exports = router;

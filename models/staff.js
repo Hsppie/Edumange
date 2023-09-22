@@ -8,7 +8,7 @@ const StaffSchema = new mongoose.Schema(
         lastname: { type: String, required: true },
         birthDate: { type: String, required: true },
         gender: { type: string, default: "female" },
-        image: { type: String, required: true },
+        //image: { type: String, required: true },
         Status: { type: String, required: true },
         job: {
             title: { type: String, require: true },
@@ -25,7 +25,7 @@ const StaffSchema = new mongoose.Schema(
             emailAddress: { type: String, unique: true },
             contact: { type: String }
         },
-        roleId: { type: mongoose.Schema.Types.ObjectId, ref: 'role' }
+        role_id: { type: mongoose.Schema.Types.ObjectId, ref: 'role' }
     },
     { timestamps: true }
 );

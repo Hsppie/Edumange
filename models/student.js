@@ -10,8 +10,8 @@ const studentSchema = new mongoose.Schema(
         admision: { type: String },
         semester: { type: String },
         //photo: { type: String, required: true},
-        //course: { type: mongoose.Schema.Types.ObjectId, ref: 'courses' },
-        fees: { type: mongoose.Schema.Types.ObjectId, ref: 'fees' },
+        course_id: { type: mongoose.Schema.Types.ObjectId, ref: 'courses' },
+        fees_id: { type: mongoose.Schema.Types.ObjectId, ref: 'fees' },
         address: {
             contact: { type: String },
             email: { type: String, unique: true },

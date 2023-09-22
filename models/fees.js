@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 
 
 const feeSchema = new mongoose.Schema({
-    amount: { type: Number},
-    dueDate: {type: String}
+    amount: { type: Number },
+    dueDate: { type: String }
 });
 
 

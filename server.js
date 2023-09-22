@@ -67,8 +67,11 @@ app.use(staffRoutes);
 
 ///Routes
 
-app.use('/student', require('./routes/student'))
-
+app.use('/student', require('./routes/student'));
+app.use('/courseUnits', require('./routes/courseunit'));
+app.use('/courses', require('./routes/courses'));
+app.use('/books', require('./routes/books'));
+app.use('/role', require('./routes/role'));
 
 app.listen(process.env.PORT || 3000, () => {
     try {

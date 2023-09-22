@@ -1,7 +1,7 @@
 /// contains functions for abouts information
 
 const express = require('express');
-const router = express.Router()
+const router = express.Router();
 const courseModel = require('../models/course');
 const courseunit = require('../models/courseUnits')
 

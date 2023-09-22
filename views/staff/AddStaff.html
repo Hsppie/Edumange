@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Staff</title>
+</head>
+<body>
+    <h1>Add New Staff</h1>
+    <form action="/add-staff" method="POST">
+        <!-- Basic Information -->
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname" required><br><br>
+
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname" required><br><br>
+
+        <label for="birthDate">Birth Date:</label>
+        <input type="date" id="birthDate" name="birthDate" required><br><br>
+
+        <label for="gender">Gender:</label>
+        <input type="radio" id="male" name="gender" value="Male">
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="Female">
+        <label for="female">Female</label><br><br>
+
+        <label for="image">Image:</label>
+        <input type="text" id="image" name="image" required><br><br>
+
+        <label for="Status">Status:</label>
+        <input type="text" id="Status" name="Status" required><br><br>
+
+        <!-- Job Information -->
+        <label for="jobTitle">Job Title:</label>
+        <input type="text" id="jobTitle" name="job.title" required><br><br>
+
+        <label for="supervisor">Supervisor:</label>
+        <input type="text" id="supervisor" name="job.supervisor"><br><br>
+
+        <label for="department">Department:</label>
+        <input type="text" id="department" name="job.department"><br><br>
+
+        <label for="WorkLocation">Work Location:</label>
+        <input type="text" id="WorkLocation" name="job.WorkLocation"><br><br>
+
+        <label for="StartDate">Start Date:</label>
+        <input type="date" id="StartDate" name="job.StartDate"><br><br>
+
+        <!-- Address Information -->
+        <label for="streetAddress">Street Address:</label>
+        <input type="text" id="streetAddress" name="address.streetAddress" required><br><br>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="address.city"><br><br>
+
+        <label for="Country">Country:</label>
+        <input type="text" id="Country" name="address.Country"><br><br>
+
+        <label for="emailAddress">Email Address:</label>
+        <input type="email" id="emailAddress" name="address.emailAddress" required><br><br>
+
+        <label for="contact">Contact:</label>
+        <input type="text" id="contact" name="address.contact"><br><br>
+
+        <!-- Role Information -->
+        <label for="roleId">Role ID:</label>
+        <input type="text" id="roleId" name="roleId" required><br><br>
+
+        <input type="submit" value="Add Staff">
+    </form>
+</body>
+</html>

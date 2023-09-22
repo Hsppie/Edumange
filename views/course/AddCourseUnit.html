@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Course Unit</title>
+</head>
+<body>
+    <h1>Add New Course Unit</h1>
+    <form action="/add-course-unit" method="POST">
+        <label for="unitname">Unit Name:</label>
+        <input type="text" id="unitname" name="unitname" required><br><br>
+
+        <label for="academicYear">Academic Year:</label>
+        <input type="text" id="academicYear" name="academicYear" required><br><br>
+
+        <label for="semester">Semester:</label>
+        <input type="number" id="semester" name="semester" min="0" required><br><br>
+
+        <label for="courseId">Course:</label>
+        <select id="courseId" name="courseId" required>
+            <!-- Populate options with courses from your database -->
+            <option value="course1">Sample Course 1</option>
+            <option value="course2">Sample Course 2</option>
+            <!-- Add more options as needed -->
+        </select><br><br>
+
+        <input type="submit" value="Add Course Unit">
+    </form>
+</body>
+</html>

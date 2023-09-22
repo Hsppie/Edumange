@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Library Transaction</title>
+</head>
+<body>
+    <h1>Add New Library Transaction</h1>
+    <form action="/add-library-transaction" method="POST">
+        <label for="studentId">Student ID:</label>
+        <input type="text" id="studentId" name="studentId" required><br><br>
+
+        <label for="bookId">Book ID:</label>
+        <input type="text" id="bookId" name="bookId" required><br><br>
+
+        <label for="checkOutDate">Check-Out Date:</label>
+        <input type="date" id="checkOutDate" name="checkOutDate" required><br><br>
+
+        <label for="returnDate">Return Date:</label>
+        <input type="date" id="returnDate" name="returnDate" required><br><br>
+
+        <input type="submit" value="Add Library Transaction">
+    </form>
+</body>
+</html>

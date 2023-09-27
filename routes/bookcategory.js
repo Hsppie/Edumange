@@ -27,8 +27,8 @@ router.post("/saveCategory", async (req, res) => {
     try {
         const book = await bookModel.findOne({ title: req.body.title })
         const newCategory = new categoryModel({
-            roleName: req.body.roleName,
-            book_id: book.book_id
+            catName: req.body.catName,
+            //book_id: book.book_id
         });
         const savedCategory = await newCategory.save();
         res.status(200).send(savedCategory)
@@ -59,7 +59,7 @@ router.put('/:cate_id/update', async (req, res) => {
             { _id: req.params.cate_id },
             {
                 $set: {
-                    roleName: req.body.catName
+                    catName: req.body.catName
                 }
             },
             { new: true }

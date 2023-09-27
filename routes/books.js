@@ -24,10 +24,13 @@ router.get('/addbook', async (req, res) => {
     this callback function will load the creation form(view)
     */
     try {
-        const category = await bookcateModel.findOne({});
-        res.send(category);
-    } catch (error) {
+        const category = await bookcateModel.find({});
+        const allbooks = await booksModel.find({});
 
+        //res.send(category);
+        res.render('books/AddBook', { category: category, allbooks: allbooks, title: "AddBook" })
+    } catch (error) {
+        res.send(error.message)
     }
 });
 /* Registration new books*/
@@ -36,14 +39,13 @@ router.post('/createbook', async (req, res) => {
     this callback function save data from the creation form to the database
     */
     try {
-        const category = await bookcateModel.findOne({});
+        const category = await bookcateModel.findOne(req.body.catName);
         const newbook = new booksModel({
             //_id: require.body.id,
             title: require.body.title,
             author: require.body.author,
             isbn: require.body.isbn,
             category_id: category._id
-
         });
         const savedbook = await newbook.save();
         // req.session.message = {

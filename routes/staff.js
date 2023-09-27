@@ -19,7 +19,7 @@ router.get('/allStaff', async (req, res) => {
 /* create staff */
 router.get('/createStaff', async (req, res) => {
   const roles = await roleModel.find({});
-  res.send('staff creation form')
+  res.render('staff/AddStaff.ejs', { title: 'Add Staff' })
 });
 /* saving data in the database */
 router.post('/saveStaff', async (req, res) => {
@@ -40,7 +40,6 @@ router.post('/saveStaff', async (req, res) => {
       },
       address: {
         streetAddress: streetAddress,
-        city: city,
         Country: Country,
         emailAddress: emailAddress,
         contact: contact

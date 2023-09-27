@@ -7,7 +7,7 @@ const StaffSchema = new mongoose.Schema(
         firstname: { type: String, required: true },
         lastname: { type: String, required: true },
         birthDate: { type: String, required: true },
-        gender: { type: string, default: "female" },
+        gender: { type: String },
         //image: { type: String, required: true },
         Status: { type: String, required: true },
         job: {

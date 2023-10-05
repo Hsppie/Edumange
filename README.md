@@ -24,6 +24,59 @@ npm install
 ```bash
 npm run server
 ```
-> ⚠ Then, the development server will be started at http://127.0.0.1:8000/
+> ⚠ Then, the development server will be started at http://127.0.0.1:5500/
 
+### Seperation of concerns:
+```bash
+## server.js
+This runs the server
+
+## app.js
+Implements pure logic like how we can use middleware
+we placed all the express code inside the app.js
+```
+### tools:
+- VS code
+- extensions - prettier code
+- MongoDB
+- Theme on VS code - Night Owl
+- API testing with Postman
+## app.js
+```
+Implements pure logic like how we can use middleware
+we placed all the express code inside the app.js
+```
 ### App Preview :
+
+
+### Structure of the project:
+```
+- MVC design pattern
+-> folder structure
+    - config
+    - app 
+    - controllers
+    - middlewares
+    - routes
+    - utils
+    - .env
+    - server.js
+    - package.json
+```
+## Create server
+```bash
+- initialize with the npm init --yes
+npm is used so we can use other packages like express, nodemon, package.json
+package.json manages packages you are going to use for the project
+```
+## Install express
+```bash
+- npm i express
+npm is used so we can use other packages like express, nodemon, package.json
+package.json manages packages you are going to use for the project
+```
+## Install dependencies
+```bash
+- npm install nodemon mongoose -D
+nodemon helps us restart our server anytime we make changes
+```

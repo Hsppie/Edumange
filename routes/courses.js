@@ -8,25 +8,26 @@ const courseunit = require('../models/courseUnits')
 /*this routes renders course creation form view */
 router.get('/addCourse', async (req, res) => {
 
-    const courseUnits = await courseunit.findOne({ unitname: req.body.units });
-    res.status(200).send(courseUnits)
+    const courseUnits = await courseunit.find({});
+    // const courses = await courseModel.findOne({}).populate({ path: "courseUnits_id", select: { unitname: 1 } }).exec();
+    res.render('course/AddCourse.ejs', { title: 'new Course', courseUnits: courseUnits })
 });
 
 /*this route is for creating a new course in database */
 
 router.post('/createCourse', async (req, res) => {
-    const courseUnits = await courseunit.findOne({ unitname: req.body.units });
+    const courseUnits = await courseunit.find([ { unitname: req.body.units } ]);
 
     const newCourse = new courseModel({
         courseName: req.body.courseName,
         description: req.body.description,
         creditHours: req.body.creditHours,
-        courseUnits_id: courseUnits._id
+        courseUnits_id: [ courseUnits._id ]
     });
 
     try {
         const course = await newCourse.save()
-        res.status(200).send(course)
+        res.status(200).redirect('/courses/allCourse')
     } catch (error) {
         console.log(error.message)
     }
@@ -36,7 +37,7 @@ router.post('/createCourse', async (req, res) => {
 router.get('/allCourse', async (req, res) => {
 
     const allCourse = await courseModel.find({});
-    res.status(200).send(allCourse);
+    res.status(200).render('course/courseList.ejs', { allCourse: allCourse, title: "Course List" });
 })
 
 /* this route is for retrieving and viewing a single course */

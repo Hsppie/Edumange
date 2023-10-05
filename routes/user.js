@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const passport = require('passport')
 
 router.get('/login', (req, res) => {
-    res.render('users/login', { title: 'Login' })
+    res.render('users/login', { title: 'Login', layout: './layouts/login.ejs' })
 })
 
 router.post('/login', (req, res, next) => {
@@ -21,39 +21,50 @@ router.get('/register', (req, res) => {
     res.send('register page')
 })
 router.post('/register', async (req, res) => {
-    const { email, username, password, role } = req.body
+    const { email, username, password } = req.body;
     let errors = [];
-    if (!username || !password || role || email) {
-        errors.push({ msg: 'Please enter all fields' })
+    if (!email || !username || !password) {
+        errors.push({ msg: 'Please enter all fields' });
     }
     if (password.length < 6) {
-        errors.push({ msg: 'Password must be at least six characters long.' })
+        errors.push({ msg: 'Password must be at least 6 characters' });
     }
     if (errors.length > 0) {
-        res.send('Rerender page')
+        res.render('register', {
+            errors, email, password
+        });
     } else {
-        const user = await User.findOne({ email: email });
-        if (user) {
-            const newlogin = new User({
-                email: email,
-                username: username,
-                password: password,
-                role: user.role
-            });
-            bcrypt.genSalt(10, (error, salt) => {
-                bcrypt.hash(newlogin.password, salt, (error, hash) => {
-                    if (error) {
-                        console.log(error)
-                    }
-                    newlogin.password = hash;
-                    newlogin.save()
-                        .then(user => {
-                            res.send(user)
-                        })
-                        .catch(error => console.log(error))
-                })
-            });
-        }
+        User.findOne({ email: email }).then(user => {
+            if (user) {
+                errors.push({ msg: 'Email already exists' });
+                res.render('register', {
+                    errors, email, password
+                });
+            } else {
+                const newUser = new User({
+
+                    email,
+                    password
+                });
+
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(newUser.password, salt, (err, hash) => {
+                        if (err) throw err;
+                        newUser.password = hash;
+                        newUser
+                            .save()
+                            .then(user => {
+                                req.flash(
+                                    'success_msg',
+                                    'You are now registered and can log in'
+                                );
+                                res.redirect('/users/login');
+                            })
+                            .catch(err => console.log(err));
+                    });
+                });
+            }
+        });
     }
 })
 

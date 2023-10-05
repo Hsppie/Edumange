@@ -1,0 +1,76 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"><button class="pull-left backbtn" title="Back" onclick="goBack()"><i class="fa fa-arrow-left" aria-hidden="true"> </i></button>
+                        Items</h1>
+                 <script>
+                        function goBack() {
+                            window.history.back();
+                        }
+                    </script>
+            </div>
+            <div class="col-sm-6">
+                 <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/dashboard/kpi">Home</a></li>
+                        <li class="breadcrumb-item active">All Students</li>
+                    </ol>
+            </div>
+        </div>
+    </div>
+</div>
+ <section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Students list</h3>
+                        <div class="card-tools">
+                            <a href="/student/register" class="btn btn-rgs btn-xs"><span class="btn btn-default btn-xs">Add Student</span></a>
+                            <a href="#" target="_blank" class="btn btn-default btn-xs"><span class="">PDF</span></a>
+                             <a href="/student/csv/download" class="btn btn-rgs btn-xs"><span class="btn btn-default btn-xs">Export List</span></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 table-responsive">
+                                <table id="example2" class="table table-sm table-condensed table-striped table-hover">
+                                     <thead>
+                                        <tr class="headings">
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Date of Birth</th>
+                                            <th>Gender</th>
+                                            <th>Admission Number</th>
+                                            <th>Course</th>
+                                            <th>Tel</th>
+                                            <th>Email</th>
+                                        </tr>
+                                     </thead>
+                                     <tbody>
+                                        <% allStudents.forEach(student => { %>
+                                         <tr>
+                                            <td><%= student.firstname %></td>
+                                            <td><%= student.lastname %></td>
+                                            <td><%= student.birthDate %></td>
+                                            <td><%= student.gender %></td>
+                                            <td><%= student.admision %></td>
+                                            <td><%= student.course_id ? student.course_id.courseName : "" %></td>
+                                            <td><%= student.address.contact %></td>
+                                            <td><%= student.address.email %></td>
+                                         </tr>
+                                        <% }) %>
+                                     </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ </section>

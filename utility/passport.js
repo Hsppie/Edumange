@@ -6,24 +6,25 @@ const User = require('../models/User')
 module.exports = function (passport) {
     passport.use(
         new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
-            try {
-                const user = await User.findOne({ email: email });
-                // Match user
+            // Match user
+            user
+            User.findOne({
+                email: email
+            }).then(user => {
                 if (!user) {
-                    return done(null, false.valueOf, { msg: 'Email does not exit' });
+                    return done(null, false, { message: 'That email is not registered' });
                 }
+
                 // Match password
                 bcrypt.compare(password, user.password, (err, isMatch) => {
+                    if (err) throw err;
                     if (isMatch) {
                         return done(null, user);
                     } else {
-                        return done(null, { msg: 'password Incorrect' })
+                        return done(null, false, { message: 'Password incorrect' });
                     }
-
-                })
-            } catch (error) {
-                if (error) return done(error);
-            }
+                });
+            });
         })
     );
     passport.serializeUser(function (user, done) {

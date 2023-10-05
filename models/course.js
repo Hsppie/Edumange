@@ -5,7 +5,7 @@ const { Schema, Model, default: mongoose } = require("mongoose");
 
 const courseSchema = new mongoose.Schema({
     //_id: {type: String, unique: true},
-    courseName: { type: String },
+    courseName: { type: String, unique: true },
     description: { type: String },
     creditHours: { type: String },
     courseUnits_id: [ { type: mongoose.Schema.Types.ObjectId, ref: 'courseUnits' } ]

@@ -6,8 +6,8 @@ const bookModel = require('../models/books');
 
 /* fetching all courseunits */
 router.get('/allcategories', async (req, res) => {
-    const allUnits = await categoryModel.find({});
-    res.status(200).send(allUnits);
+    const allcategories = await categoryModel.find({});
+    res.render('books/AddBookCategory.ejs', { title: "Add Book", allcategories: allcategories });
 });
 
 /* load creation form view template */
@@ -22,18 +22,24 @@ router.get('/addCategory', async (req, res) => {
 });
 
 /* saving data to the database */
-router.post("/saveCategory", async (req, res) => {
+router.post("/addCategory", async (req, res) => {
 
     try {
-        const book = await bookModel.findOne({ title: req.body.title })
+        // const book = await bookModel.findOne({ title: req.body.title })
         const newCategory = new categoryModel({
             catName: req.body.catName,
-            //book_id: book.book_id
+            description: req.body.description,
         });
         const savedCategory = await newCategory.save();
-        res.status(200).send(savedCategory)
+        req.flash(
+            'success_msg',
+            `${savedCategory.catName}  has been successfull Saved`)
+        res.redirect('/categories/allcategories')
     } catch (error) {
-        console.log(error.message)
+        req.flash(
+            'error_msg',
+            `Something Went Wrong`)
+        res.redirect('/categories/allcategories')
     }
 });
 /* saving data to the database */
@@ -48,8 +54,9 @@ router.get('/:cate_id/view', async (req, res) => {
 /* renders the edit view template */
 router.get('/:cate_id/edit', async (req, res) => {
     const editCategory = await categoryModel.findById({ _id: req.params.cate_id });
-    res.status(200).send({
-        editCategory: editCategory
+    res.render('books/BookCategoryEdit', {
+        editCategory: editCategory,
+        title: 'Edit Category'
     });
 });
 /* renders the edit view template */
@@ -64,7 +71,10 @@ router.put('/:cate_id/update', async (req, res) => {
             },
             { new: true }
         );
-        res.status(200).send(updatedcate)
+        req.flash(
+            'success_msg',
+            `${updatedcate.catName}  has been successfull Saved`)
+        res.redirect('/categories/allcategories')
 
     } catch (error) {
         res.send({
@@ -78,7 +88,10 @@ router.delete('/:cate_id/remove', async (req, res) => {
     try {
         const todelete = await categoryModel.deleteOne({ _id: req.params.cate_id })
         //await todelete.delete()
-        res.send('role removed successfully')
+        req.flash(
+            'success_msg',
+            `Category has been successfull Deleted`)
+        res.redirect('/categories/allcategories')
     } catch (error) {
         res.send(error.message)
     }

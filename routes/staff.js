@@ -9,9 +9,7 @@ const roleModel = require('../models/role')
 router.get('/allStaff', async (req, res) => {
   try {
     const allStaff = await staffModel.find({});
-    res.status(201).json({
-      allStaff: allStaff
-    })
+    res.render('staff/StaffList.ejs', { title: 'ALL Staff' })
   } catch (error) {
     console.log(error.message)
   }
@@ -19,12 +17,13 @@ router.get('/allStaff', async (req, res) => {
 /* create staff */
 router.get('/createStaff', async (req, res) => {
   const roles = await roleModel.find({});
-  res.render('staff/AddStaff.ejs', { title: 'Add Staff' })
+  res.render('staff/AddStaff.ejs', { title: 'Add Staff', roles: roles })
 });
 /* saving data in the database */
 router.post('/saveStaff', async (req, res) => {
   try {
     const role = await roleModel.find({ roleName: req.body.roleName })
+    console.log(role)
     const newStaff = new staffModel({
       firstname: req.body.firstname,
       lastname: req.body.lastname,
@@ -39,17 +38,24 @@ router.post('/saveStaff', async (req, res) => {
         StartDate: req.body.StartDate
       },
       address: {
-        streetAddress: streetAddress,
-        Country: Country,
-        emailAddress: emailAddress,
-        contact: contact
+        streetAddress: req.body.streetAddress,
+        Country: req.body.Country,
+        emailAddress: req.body.emailAddress,
+        contact: req.body.contact
       },
       role_id: role.role_id
     });
+    console.log(role_id)
     const savedStaff = await newStaff.save()
-    res.send(`${savedStaff.firstname} saved successfully`)
+    req.flash(
+      'success_msg',
+      `${savedStaff.firstname} ${savedStaff.lastname} has been successfull Saved`)
+    res.redirect('/staff/allStaff')
   } catch (error) {
-    res.send(error.message)
+    req.flash(
+      'error_msg',
+      `${error.message}`)
+    res.redirect('/staff/createStaff')
   }
 });
 

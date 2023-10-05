@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const feeSchema = new mongoose.Schema({
     amount: { type: Number },
-    dueDate: { type: String }
+    course_id: { type: mongoose.Schema.Types.ObjectId, ref: 'courses' },
 });
 
 

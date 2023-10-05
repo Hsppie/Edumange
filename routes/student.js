@@ -3,57 +3,71 @@
 const express = require('express');
 const router = express.Router();
 const studentModel = require('../models/student');
-//const studentCourse = require('../models/course');
-const multer = require('multer');
-//const upload = require('../utility/utility');
+const studentCourse = require('../models/course');
+const feesModel = require('../models/fees')
+const parsar = require('json2csv').Parser;
+
+;
 
 
 /* Beginning of Student Registration form route */
-router.get('/register', (req, res) => {
+router.get('/register', async (req, res) => {
     // student registration form route
-    res.send('Student Registration form')
+    const courses = await studentCourse.find()
+    res.render('student/AddStudent.ejs', { title: 'New Student', courses: courses })
 });
 // Ending of Student Registration form route
 
 // student registration route
 router.post('/addStudent', async (req, res) => {
     //create New sudent function
-    const newStudent = new studentModel({
-        _id: req.body.id,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        birthDate: req.body.birthDate,
-        admision: req.body.admision,
-        //photo: req.file.fieldname,
-        course: req.body.course,
-        fees: req.body.fees,
-        address: {
-            contact: req.body.contact,
-            email: req.body.email,
-        },
-    });
-    try {
-        const student = await newStudent.save();
-        req.session.message = {
-            message: 'Student Registered',
-            type: 'success',
-        }
-        res.send(student)
-    } catch (error) {
-        res.send({
-            message: error.message,
-            type: 'danger',
+    const course = req.body.courseName
+    const fee = req.body.amount
+    const courses = await studentCourse.findOne({ courseName: course })
+    const fees = await feesModel.findOne({ amount: fee })
+    if (courses.courseName == req.body.courseName && fees.amount == req.body.amount) {
+        let courseid = courses._id
+        let feeId = fees._id
+        const newStudent = new studentModel({
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            birthDate: req.body.birthDate,
+            gender: req.body.gender,
+            admision: req.body.admision,
+            semester: req.body.semester,
+            //photo: req.file.fieldname,
+            course_id: courseid,
+            fees_id: feeId,
+            address: {
+                contact: req.body.contact,
+                email: req.body.email,
+            },
         });
+        try {
+            const student = await newStudent.save();
+            req.session.message = {
+                message: 'Student Registered',
+                type: 'success',
+            }
+            res.redirect('/student/allStudents')
+        } catch (error) {
+            res.send({
+                message: error.message,
+                type: 'danger',
+            });
+        }
     }
 });
 
 router.get('/allStudents', async (req, res) => {
     //get all sudents function
     try {
-        const allStudents = await studentModel.find({});
-        res.status(200).send(allStudents);
-        //res.render('text', { title: 'all students page' });
+        const allStudents = await studentModel.find().populate({ path: "course_id", select: { courseName: 1 } }).exec();
+        //console.log(allStudents.course_id.courseName)
+        res.render('student/StudentList.ejs', { title: 'Student List', allStudents: allStudents })
+        //res.send(allStudents)
     } catch (error) {
+        res.send(error.message)
         /*
         * If there is an error in the above code, send a generic Server Error response to the client
         */
@@ -141,4 +155,96 @@ router.get('/enrollments/enrollment_id', (req, res) => {
 
 /* end of Student Enrolment and Admission */
 
+const csvpaser = require('json2csv').Parser
+
+//Download CSV file
+router.get('/csv/download', async (req, res) => {
+    try {
+        let students = [];
+        var studentDate = await studentModel.find({}).populate('course_id', 'courseName');
+        studentDate.forEach((student) => {
+            const { firstname, lastname, birthDate, gender, admision, course_id } = student
+            students.push({ firstname, lastname, birthDate, gender, admision, course_id })
+        });
+        //const csvFields = [ 'First Name', 'Last Name', 'Birth Date', 'Gender', 'Admision Number', 'Course', 'Tel', 'Email' ]
+        const csvFields = [
+            {
+                label: 'First Name',
+                value: "firstname"
+            },
+            {
+                label: 'Last Name',
+                value: "lastname"
+            },
+            {
+                label: 'Birth Date ',
+                value: "birthdate"
+            },
+            {
+                label: 'Gender ',
+                value: "gender"
+            },
+            {
+                label: 'Admision Number ',
+                value: "admision"
+            },
+            {
+                label: 'Course ',
+                value: "course_id"
+            },
+            {
+                label: 'Tel ',
+                value: "address.contact"
+            },
+            {
+                label: 'Email ',
+                value: "address.email"
+            }
+
+        ]
+        const csvinfo = new csvpaser({ csvFields });
+        const csvData = csvinfo.parse(students)
+        res.setHeader("Content-Type", "text/csv");
+        res.setHeader("Content-Deposition", "attachment: filename=Students.csv")
+        res.status(200).end(csvData)
+    } catch (error) {
+
+    }
+})
+
+const multer = require('multer');
+const path = require('path');
+const csv = require('csvtojson')
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, "upload-" + Date.now() + "-" + file.originalname);
+    }
+
+})
+const upload = multer({ storage: storage });
+
+
+router.post('/csv/import', upload.single('file'), async (req, res, next) => {
+    try {
+        const studentDate = [];
+        csv().fromFile(req.file.path)
+            .then(async (data) => {
+                for (var i = 0; i < data.length; i++) {
+                    studentDate.push({
+                        firstname: data[ i ].firstname,
+
+                    })
+                }
+                await studentModel.insertMany(studentDate);
+            })
+        res.send({ status: 400, success: true, message: "Uploaded successfully" })
+    } catch (error) {
+        res.send({ status: 400, success: false, message: error.message })
+    }
+
+})
 module.exports = router;

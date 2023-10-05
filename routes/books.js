@@ -12,14 +12,14 @@ router.get('/allbooks', async (req, res) => {
     */
     try {
         const allbooks = await booksModel.find({});
-        res.status(200).send(allbooks);
+        res.status(200).render('books/BookList.ejs', { allbooks: allbooks, title: 'All Books' });
     } catch (error) {
         res.status(200).send(error.message)
     }
 });
 
 //book creation form
-router.get('/addbook', async (req, res) => {
+router.get('/createbook', async (req, res) => {
     /* 
     this callback function will load the creation form(view)
     */
@@ -39,26 +39,38 @@ router.post('/createbook', async (req, res) => {
     this callback function save data from the creation form to the database
     */
     try {
-        const category = await bookcateModel.findOne(req.body.catName);
-        const newbook = new booksModel({
-            //_id: require.body.id,
-            title: require.body.title,
-            author: require.body.author,
-            isbn: require.body.isbn,
-            category_id: category._id
-        });
-        const savedbook = await newbook.save();
-        // req.session.message = {
-        //     message: 'Book Registered',
-        //     type: 'success',
-        // }
-        res.send(savedbook)
-    } catch (error) {
+        let errors = [];
+        let categories = req.body.catName;
+        const category = await bookcateModel.findOne({ catName: req.body.catName });
+        if (category.catName == req.body.catName) {
+            const newbook = new booksModel({
+                //_id: require.body.id,
+                title: require.body.title,
+                author: require.body.author,
+                isbn: require.body.isbn,
+                category_id: category._id
+            });
+            if (!title || author || isbn || category_id) {
+                errors.push({ msg: 'Please enter all fields' });
+            }
+            const savedbook = await newbook.save();
+            req.flash(
+                'success_msg',
+                `${savedbook.title} has been successfull Saved`
+            );
+            res.redirect('books/createbook')
+        }
+    }
+    catch (error) {
         // res.send.json({
         //     message: error.message,
         //     type: 'danger',
         // });
-        res.send(error.message)
+        req.flash(
+            'error_msg',
+            `${error.message}`
+        );
+        res.redirect('books/createbook')
     }
 });
 
@@ -66,6 +78,7 @@ router.post('/createbook', async (req, res) => {
 router.get('/:book_id/view', async (req, res) => {
     /* 
     a function that will render a single book view
+    book._id
     */
     try {
         const book = await booksModel.findById({ _id: req.params.book_id }).populate({ path: "category_id", select: "catName" })

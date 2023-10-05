@@ -26,7 +26,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12"></div>
             </div>
              <div class="row">
-                <div class="col-md-5 col-sm-12">
+                <div class="col-md-12 col-sm-12">
                      <div class="card card-outline card-info">
                         <div class="card-header">
                             <h3 class="card-title">Book Category Form</h3>
@@ -36,17 +36,29 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="/categories/addCategory" method="post">
+                            <form action="/courses/createCourse" method="post">
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="">Category Name <span class="text text-danger">*</span> </label>
-                                        <input type="text" name="catName" class="form-control" required />
+                                    <div class="col-md-12 ">
+                                        <label for="">Course Name <span class="text text-danger">*</span> </label>
+                                        <input type="text" name="courseName" class="form-control" required />
                                     </div>
                                 
                                     <div class="col-md-12">
-                                        <label for="">Description </label>
+                                        <label for="">Course Description </label>
                                         <textarea name="description" class="form-control" placeholder="Write here..."></textarea>
                                     </div>
+                                     <div class="col-md-12">
+                                        <label for="">Credit Hours </label>
+                                        <input type="text" name="creditHours" class="form-control" required />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="">Course Units </label>
+                                        <select class="form-select form-control" name="unitname" multiple aria-label="multiple select example">
+                                            <option selected>Open this select Course Unit</option>
+                                            <% courseUnits.forEach(units => { %>
+                                             <option value="<%= units.unitname %>"><%= units.unitname %></option>
+                                            <% }) %>
+                                        </select>
                                     <div class="col-md-12" style="padding-top: 15px; margin-top: 15px;">
                                         <button type="Submit" class="btn btn-primary">Save</button>
                                     </div>
@@ -55,37 +67,7 @@
                         </div>
                      </div>
                 </div>
-                <div class="col-md-7 col-sm-12">
-                    <div class="card card-outline card-info">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12 table-responsive">
-                                    <table id="example1" class="table table-striped responsive-utilities">
-                                        <thead>
-                                            <th>Category Name</th>
-                                            <th>Description</th>
-                                            <th>Actions</th>
-                                        </thead>
-                                        <tbody>
-                                            
-                                                <% allcategories.forEach(allcategory => { %>
-                                                <tr>
-                                                    <td><%= allcategory.catName %></td>
-                                                    <td><%= allcategory.description %></td>
-                                                    <td>
-                                                        <a href="/categories/<%= allcategory._id %>/edit" title="Edit" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i>Edit</a>
-                                                        <form class="btn btn-xs btn-danger" action="/categories/<%= allcategory._id %>/remove?_method=delete" method="post"><button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>Delete</button></form>
-                                                    </td>
-                                                </tr>
-                                                <% }) %>
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
              </div>
          </div>
      </section>
+                                            

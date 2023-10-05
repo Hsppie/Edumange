@@ -25,18 +25,16 @@
 <!-- /.content-header -->
 <section class="content">
     <div class="container-fluid">
+         <%- include('../messages/messages') %>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12"></div>
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <div class="card card-primary shadow-sm">
+                <div class="card card-outline card-info">
                     <div class="card-header">
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool"
-                                data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
+                            <a href="/books/allbooks" class="btn btn-rgs btn-xs btn-primary"><span class="btn btn-primary btn-xs">View Books</span></a>
                         </div>
 
                         <!-- /.card-tools -->
@@ -45,7 +43,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <form action>
+                                <form action="/books/createbook" method="POST">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -53,7 +51,16 @@
                                                     <label
                                                         for="exampleInputEmail1">Book
                                                         Title</label>
-                                                    <input type="text"
+                                                    <input type="text" name="title"
+                                                        class="form-control"
+                                                        placeholder="Enter Title">
+                                                </div>
+                                            </div>
+                                             <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label
+                                                        for="exampleInputEmail1">Publication Year</label>
+                                                    <input type="text" name="publishedyear"
                                                         class="form-control"
                                                         placeholder="Enter Title">
                                                 </div>
@@ -62,7 +69,7 @@
                                                 <div class="form-group">
                                                     <label
                                                         for="exampleInputEmail1">Author</label>
-                                                    <input type="text"
+                                                    <input type="text" name="author"
                                                         class="form-control"
                                                         placeholder="Author">
                                                 </div>
@@ -74,7 +81,7 @@
                                                     <label
                                                         for="exampleInputEmail1">ISBN
                                                         Number</label>
-                                                    <input type="text"
+                                                    <input type="text" name="isbn"
                                                         class="form-control"
                                                         placeholder="ISBN Number">
                                                 </div>
@@ -82,19 +89,12 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Category</label>
-                                                    <select name="catName"
-                                                        value="<%= category.catName %>"
-                                                        class="form-control"
-                                                        id="exampleSelectRounded0">
-                                                        <% for(var i = 0; i <
-                                                        category.lenth; i++) {%>
-                                                        <option
-                                                            value="<%= category[i].catName %>"><%=
-                                                            category[i].catName
-                                                            %></option>
-                                                        <% } %>>
+                                                    <select name="catName" class="custom-select rounded-0" id="exampleSelectRounded0">
+                                                        <option value="">Select Category</option>
+                                                        <% category.forEach(categories => { %>
+                                                            <option value="<%= categories.catName %>"><%= categories.catName %></option>
+                                                        <% }) %>
                                                     </select>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -111,106 +111,6 @@
                                         </div>
                                     </div>
                                 </form>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Books</h3>
-
-                                        <div class="card-tools">
-                                            <ul
-                                                class="pagination pagination-sm float-right">
-                                                <li class="page-item"><a
-                                                        class="page-link"
-                                                        href="#">&laquo;</a></li>
-                                                <li class="page-item"><a
-                                                        class="page-link"
-                                                        href="#">1</a></li>
-                                                <li class="page-item"><a
-                                                        class="page-link"
-                                                        href="#">2</a></li>
-                                                <li class="page-item"><a
-                                                        class="page-link"
-                                                        href="#">3</a></li>
-                                                <li class="page-item"><a
-                                                        class="page-link"
-                                                        href="#">&raquo;</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-    
-                                    <div class="card-body p-0">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                        
-                                                    <th>Book Name</th>
-                                                    <th>Author</th>
-                                                    <th style="width: 40px">Category</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    
-                                                    <td>Update software</td>
-                                                    <td>
-                                                        <div
-                                                            class="progress progress-xs">
-                                                            <div
-                                                                class="progress-bar progress-bar-danger"
-                                                                style="width: 55%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span
-                                                            class="badge bg-danger">55%</span></td>
-                                                </tr>
-                                                <tr>
-                                                    
-                                                    <td>Clean database</td>
-                                                    <td>
-                                                        <div
-                                                            class="progress progress-xs">
-                                                            <div
-                                                                class="progress-bar bg-warning"
-                                                                style="width: 70%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span
-                                                            class="badge bg-warning">70%</span></td>
-                                                </tr>
-                                                <tr>
-                                                    
-                                                    <td>Cron job running</td>
-                                                    <td>
-                                                        <div
-                                                            class="progress progress-xs progress-striped active">
-                                                            <div
-                                                                class="progress-bar bg-primary"
-                                                                style="width: 30%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span
-                                                            class="badge bg-primary">30%</span></td>
-                                                </tr>
-                                                <tr>
-                                                    
-                                                    <td>Fix and squish bugs</td>
-                                                    <td>
-                                                        <div
-                                                            class="progress progress-xs progress-striped active">
-                                                            <div
-                                                                class="progress-bar bg-success"
-                                                                style="width: 90%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span
-                                                            class="badge bg-success">90%</span></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- /.card-body -->
-                                </div>
                             </div>
                         </div>
                     </div>

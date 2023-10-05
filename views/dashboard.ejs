@@ -1,0 +1,94 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-12">
+                <a href="/staff/allStaff" style="color:black">
+                    <div class="info-box">
+                    <span class="info-box-icon bg-info elevation-1"><i
+                            class="fas fa-users"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">All Staff</span>
+                        <span class="info-box-number"><%= allstaff %></span>
+                    </div>
+                </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <a href="/student/allStudents" style="color:black"> 
+                    <div class="info-box mb-3">
+                    <span class="info-box-icon bg-orange elevation-1"><i
+                            style="color: white;" class="fa fa-user-circle"
+                            aria-hidden="true"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Students</span>
+                        <span class="info-box-number"><%= allstudents %></span>
+                    </div>
+                </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-primary elevation-1"><i
+                            class="fas fa-money-bill-wave"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Cash</span>
+                        <span class="info-box-number text-danger"><u>192,251</u></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1"><i
+                            class="fas fa-building"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Courses</span>
+                        <span class="info-box-number"><%= allCourses %></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card direct-chat direct-chat-warning">
+                    <p class="m-3">
+                        <a class="btn btn-app" href="#">
+                            <i class="fa fa-tags"></i> New Course
+                        </a>
+                        <a class="btn btn-app" href="#">
+                                        <i class="fa fa-book" aria-hidden="true"></i> Library
+                                    </a>
+                        <a class="btn btn-app" href="/student/register">
+                                        <i class="fa fa-users" style="color: green;"></i> New Student
+                                    </a>
+                                    <a class="btn btn-app" href="">
+                                        <i class="fa fa-cube"></i> New Book Category
+                                    </a>
+                                    <a class="btn btn-app" href="#">
+                                        <i class="fa fa-shopping-cart" style="color: #C13434;"></i> New Book
+                                    </a>
+                                    <a class="btn btn-app" href="#">
+                                        <i class="fa fa-external-link"></i> Stock
+                                    </a>
+                                </p>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

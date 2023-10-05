@@ -1,38 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book List</title>
-</head>
-<body>
-    <h1>Book List</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>ISBN</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Use server-side scripting or JavaScript to populate the table with data from your model -->
-            <!-- Example data rows -->
-            <tr>
-                <td>Sample Book 1</td>
-                <td>John Doe</td>
-                <td>1234567890</td>
-                <td>Fiction</td>
-            </tr>
-            <tr>
-                <td>Sample Book 2</td>
-                <td>Jane Smith</td>
-                <td>9876543210</td>
-                <td>Non-fiction</td>
-            </tr>
-            <!-- Repeat this row structure for each book in your model -->
-        </tbody>
-    </table>
-</body>
-</html>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"><button class="pull-left backbtn" title="Back" onclick="goBack()"><i class="fa fa-arrow-left" aria-hidden="true"> </i></button>
+                        Books</h1>
+                 <script>
+                        function goBack() {
+                            window.history.back();
+                        }
+                    </script>
+            </div>
+            <div class="col-sm-6">
+                 <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/dashboard/kpi">Home</a></li>
+                        <li class="breadcrumb-item active">All Books</li>
+                    </ol>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="content">
+        <div class="container-fluid">
+             <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12"></div>
+            </div>
+             <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="card card-outline card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">All Books</h3>
+                            <div class="card-tools">
+                            <a href="/books/createbook" class="btn btn-rgs btn-xs btn-primary"><span class="btn btn-primary btn-xs">New Book</span></a>
+            
+                        </div>
+                        </div>
+                         <div class="col-md-12 col-sm-12">
+                            <div class="card-body">
+                             <div class="row">
+                                <div class="col-md-12 table-responsive">
+                                    <table id="example1" class="table table-striped responsive-utilities">
+                                        <thead>
+                                            <th>Book Name</th>
+                                            <th>Author</th>
+                                            <th>ISBN</th>
+                                            <th>Category</th>
+                                            <th>Published Year</th>
+                                        </thead>
+                                        <tbody>
+                                            
+                                                <% allbooks.forEach(allbook => { %>
+                                                <tr>
+                                                    <td><%= allbook.title %></td>
+                                                    <td><%= allbook.author %></td>
+                                                    <td><%= allbook.isbn %></td>
+                                                    <td><%= allbook.category_id %></td>
+                                                    <td><%= allbook.publishedyear %></td>
+                                                    <td>
+                                                        <a href="/books/<%= allbook._id %>/edit" title="Edit" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i>Edit</a>
+                                                        <form class="btn btn-xs btn-danger" action="/books/<%= allbook._id %>/remove?_method=delete" method="post"><button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>Delete</button></form>
+                                                    </td>
+                                                </tr>
+                                                <% }) %>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                             </div>
+                        </div>
+                         </div>
+                        
+                    </div>
+                </div>
+             </div>
+        </div>
+     </section>

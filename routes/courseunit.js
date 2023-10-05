@@ -6,7 +6,7 @@ const courses = require('../models/course');
 /* fetching all courseunits */
 router.get('/allCourseUnits', async (req, res) => {
     const allUnits = await courseunits.find({});
-    res.status(200).send(allUnits);
+    res.render('course/courseUnitList.ejs', { title: 'Course Credits', allUnits: allUnits })
 });
 
 /* load creation form view template */
@@ -25,10 +25,13 @@ router.post("/saveUnit", async (req, res) => {
             unitname: req.body.unitname,
             academicYear: req.body.academicYear,
             semster: req.body.semster,
-            course_id: [ course._id ]
+
         });
         const savedUnit = await newUnit.save();
-        res.status(200).send(savedUnit)
+        req.flash(
+            'success_msg',
+            `${savedUnit.unitname} has been successfull Saved`)
+        res.redirect('/courseUnits/allCourseUnits')
     } catch (error) {
         res.send(error.message)
     }
@@ -55,20 +58,23 @@ router.get('/:courseunit_id/edit', async (req, res) => {
 router.put('/:courseunit_id/update', async (req, res) => {
 
     try {
-        const course = await courses.findOne({ name: req.body.courseName });
-        const updatedUnit = await courseModel.findByIdAndUpdate(
+        const course = await courseunits.findOne({ name: req.body.courseName });
+        const updatedUnit = await courseunits.findByIdAndUpdate(
             { _id: req.params.courseunit_id },
             {
                 $set: {
                     unitname: req.body.unitname,
                     academicYear: req.body.academicYear,
                     semster: req.body.semster,
-                    course_id: course._id
+
                 }
             },
             { new: true }
         );
-        res.status(200).send(updatedUnit)
+        req.flash(
+            'success_msg',
+            `${updatedUnit.unitname} has been successfull Updated`)
+        res.redirect('/courseUnits/allCourseUnits')
 
     } catch (error) {
         res.send({
@@ -80,10 +86,16 @@ router.put('/:courseunit_id/update', async (req, res) => {
 router.delete('/:courseunit_id/remove', async (req, res) => {
 
     try {
-        const todelete = await courseModel.deleteOne({ _id: req.params.courseunit_id })
-        res.send('course unit removed successfully')
+        const todelete = await courseunits.deleteOne({ _id: req.params.courseunit_id })
+        req.flash(
+            'success_msg',
+            `Course Credit Has been Deleted`)
+        res.redirect('/courseUnits/allCourseUnits')
     } catch (error) {
-
+        req.flash(
+            'error_msg',
+            `${error.message}`)
+        res.redirect('/courseUnits/allCourseUnits')
     }
 })
 

@@ -1,0 +1,55 @@
+<div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark"><button class="pull-left backbtn" title="Back" onclick="goBack()"><i class="fa fa-arrow-left" aria-hidden="true"> </i></button>
+                        Edit <%= editCategory.catName %></h1>
+                    <script>
+                        function goBack() {
+                            window.history.back();
+                        }
+                    </script>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active"><%= editCategory.catName %></li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+     <section class="content">
+        <div class="container-fluid">
+             <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12"></div>
+            </div>
+             <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="card card-outline card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">Book Category Name</h3>
+                        </div>
+                        <div class="card-body">
+                             <form action="/categories/<%= editCategory._id %>/update?_method=put" method="post">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="">Category Name <span class="text text-danger">*</span> </label>
+                                        <input type="text" name="catName" class="form-control" value="<%= editCategory.catName %>" required />
+                                    </div>
+                                
+                                    <div class="col-md-12">
+                                        <label for="">Description </label>
+                                        <textarea name="description" value="<%= editCategory.description %>" class="form-control" placeholder="Write here..."></textarea>
+                                    </div>
+                                    <div class="col-md-12" style="padding-top: 15px; margin-top: 15px;">
+                                        <button type="Submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+     </section>

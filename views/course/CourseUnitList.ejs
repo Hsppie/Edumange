@@ -1,0 +1,306 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"><button class="pull-left backbtn"
+                        title="Back" onclick="goBack()"><i
+                            class="fa fa-arrow-left" aria-hidden="true"> </i></button>
+                    Course Credits</h1>
+                <script>
+                        function goBack() {
+                            window.history.back();
+                        }
+                    </script>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a
+                            href="https://jipos.jiwanitech.com/">Home</a></li>
+                    <li class="breadcrumb-item active">Course Credits</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"><%- include('../messages/messages') %></div>
+            <div class="col-md-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Course Credits List</h3>
+                        <div class="card-tools">
+                            <button class="btn btn-xs btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#addcourseunit">New Credit</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 table-responsive">
+                                <table id="example1"
+                                    class="table table-striped responsive-utilities table-sm">
+                                    <thead>
+                                        <tr class="headings">
+                                            <th>Credit Name</th>
+                                            <th>Academic Year </th>
+                                            <th>semster </th>
+                                            <th class=" no-link last text-end"><span
+                                                    class="nobr">Action</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% allUnits.forEach(unit => { %>
+                                        <tr class="even pointer">
+                                            <td><%= unit.unitname %></td>
+                                            <td><%= unit.academicYear %></td>
+                                            <td><%= unit.semster %></td>
+                                            <td class=" last">
+                                                <div>
+                                                    <a
+                                                        class="btn btn-xs btn-primary "
+                                                        href="#"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModalCenter"><span
+                                                            class="fa fa-pencil"></span>
+                                                        Edit</a>
+                                                    <a class="btn btn-xs btn-warning " href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCente"><span class="fa fa-eye"></span> View</a>
+                                                    
+                                                    <form
+                                                        class="btn btn-xs btn-danger "
+                                                        action="/courseUnits/<%= unit._id %>/remove?_method=DELETE"
+                                                        method="post"><span
+                                                            class="fa fa-trash"></span><button
+                                                            class="btn btn-xs btn-danger ">Delete</button>
+                                                    </form>
+                                                </div>
+                                                <div class="modal fade"
+                                                    id="exampleModalCente"
+                                                    tabindex="-1" role="dialog"
+                                                    aria-labelledby="exampleModalCenterTitle"
+                                                    aria-hidden="true">
+                                                    <div
+                                                        class="modal-dialog modal-dialog-centered"
+                                                        role="document">
+                                                        <div
+                                                            class="modal-content">
+                                                            <div
+                                                                class="modal-body">
+                                                                <div
+                                                                    class="card card-outline card-warning">
+                                                                    <div
+                                                                        class="card-header">
+                                                                        <h3
+                                                                            class="card-title"><%=
+                                                                            unit.unitname
+                                                                            %></h3>
+                                                                        <!-- <div class="card-tools">
+                                                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i> </button>
+                                                                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                                                                    </div> -->
+                                                                    </div>
+                                                                    <div
+                                                                        class="card-body">
+                                                                        <div
+                                                                            class="row">
+                                                                            <div
+                                                                                class="col-12 col-sm-12"><b>Credit
+                                                                                    Name:
+                                                                                </b><%=
+                                                                                unit.unitname
+                                                                                %></div>
+                                                                            <div
+                                                                                class="col-12 col-sm-12"><b>Academic
+                                                                                    Year:
+                                                                                </b><%=
+                                                                                unit.academicYear
+                                                                                %>
+                                                                                <div
+                                                                                    class="col-12 col-sm-12"><b>semster:
+                                                                                    </b><%=
+                                                                                    unit.semster
+                                                                                    %></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                    <!--Updating/Editing-->
+                                                    <div class="modal fade"
+                                                        id="exampleModalCenter"
+                                                        tabindex="-1"
+                                                        role="dialog"
+                                                        aria-labelledby="exampleModalCenterTitle"
+                                                        aria-hidden="true">
+                                                        <div
+                                                            class="modal-dialog modal-dialog-centered"
+                                                            role="document">
+                                                            <div
+                                                                class="modal-content">
+                                                                <div
+                                                                    class="modal-body">
+                                                                    <div
+                                                                        class="row">
+                                                                        <form
+                                                                            action="/courseUnits/<%= unit._id %>/update?_method=PUT"
+                                                                            method="post">
+                                                                            <div
+                                                                                class="row">
+                                                                                <div
+                                                                                    class="col-md-12 col-sm-12 col-xs-12">
+                                                                                    <label
+                                                                                        for>Credit
+                                                                                        Name
+                                                                                        <span
+                                                                                            class="text text-danger">*</span>
+                                                                                    </label>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        name="unitname"
+                                                                                        value="<%= unit.unitname %>"
+                                                                                        class="form-control" />
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-md-12 col-sm-12 col-xs-12">
+                                                                                    <label
+                                                                                        for>Academic
+                                                                                        Year
+                                                                                        <span
+                                                                                            class="text text-danger">*</span>
+                                                                                    </label>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        name="academicYear"
+                                                                                        value="<%= unit.academicYear %>"
+                                                                                        class="form-control" />
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-md-12 col-sm-12 col-xs-12">
+                                                                                    <label
+                                                                                        for>semster
+                                                                                        <span
+                                                                                            class="text text-danger">*</span>
+                                                                                    </label>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        name="semster"
+                                                                                        value="<%= unit.semster %>"
+                                                                                        class="form-control" />
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-md-12"
+                                                                                    style="padding-top: 15px; margin-top: 15px;">
+                                                                                    <button
+                                                                                        type="button"
+                                                                                        class="btn btn-primary"
+                                                                                        data-bs-dismiss="modal">Close</button>
+                                                                                    <button
+                                                                                        type="Submit"
+                                                                                        class="btn btn-success float-right">Update</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                        </tbody>
+                                    </table>
+                                    <!-- /.tab-pane -->
+                                    <!--new course unit Module-->
+                                    <div class="modal fade" id="addcourseunit"
+                                        tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle"
+                                        aria-hidden="true">
+                                        <div
+                                            class="modal-dialog modal-dialog-centered"
+                                            role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <form
+                                                            action="/courseUnits/saveUnit"
+                                                            method="post">
+                                                            <div class="row">
+                                                                <div
+                                                                    class="col-md-12 col-sm-12 col-xs-12">
+                                                                    <label for>Credit
+                                                                        Name
+                                                                        <span
+                                                                            class="text text-danger">*</span>
+                                                                    </label>
+                                                                    <input
+                                                                        type="text"
+                                                                        name="unitname"
+                                                                        value
+                                                                        class="form-control" />
+                                                                </div>
+                                                                <div
+                                                                    class="col-md-12 col-sm-12 col-xs-12">
+                                                                    <label for>Academic
+                                                                        Year
+                                                                        <span
+                                                                            class="text text-danger">*</span>
+                                                                    </label>
+                                                                    <input
+                                                                        type="text"
+                                                                        name="academicYear"
+                                                                        value
+                                                                        class="form-control" />
+                                                                </div>
+                                                                <div
+                                                                    class="col-md-12 col-sm-12 col-xs-12">
+                                                                    <label for>semster
+                                                                        <span
+                                                                            class="text text-danger">*</span>
+                                                                    </label>
+                                                                    <input
+                                                                        type="text"
+                                                                        name="semster"
+                                                                        value
+                                                                        class="form-control" />
+                                                                </div>
+                                                                <div
+                                                                    class="col-md-12"
+                                                                    style="padding-top: 15px; margin-top: 15px;">
+                                                                    <button
+                                                                        type="button"
+                                                                        class="btn btn-danger"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                    <button
+                                                                        type="Submit"
+                                                                        class="btn btn-primary float-right">Save
+                                                                        Credit
+                                                                        Unit</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

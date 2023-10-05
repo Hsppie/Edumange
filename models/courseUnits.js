@@ -7,7 +7,6 @@ const courseUnitsSchema = new mongoose.Schema({
     unitname: { type: String },
     academicYear: { type: String },
     semster: { type: Number, default: 0 },
-    course_id: [ { type: mongoose.Schema.Types.ObjectId, ref: 'courses' } ]
 });
 
 const CourseUnits = mongoose.model('courseUnits', courseUnitsSchema);
